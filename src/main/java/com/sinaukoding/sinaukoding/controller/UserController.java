@@ -1,5 +1,6 @@
 package com.sinaukoding.sinaukoding.controller;
 
+import com.sinaukoding.sinaukoding.Response;
 import com.sinaukoding.sinaukoding.entity.User;
 import com.sinaukoding.sinaukoding.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class UserController {
     }
 
     @GetMapping()
-    public ResponseEntity<?> findAll() {
-        return new ResponseEntity<>(service.lihatSemuaData(), HttpStatus.OK);
+    public Response findAll() {
+        return new Response(service.lihatSemuaData(), "Data Berhasil ditampilkan", HttpStatus.OK);
     }
 
     @GetMapping(value = "/find-by-profile-name")
