@@ -1,9 +1,13 @@
 package com.sinaukoding.sinaukoding.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -20,4 +24,22 @@ public class User {
 
     @Column(name = "profile_name")
     private String profileName;
+
+    @Column(name = "date")
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private Date date;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_detail")
+    private DetailUser detailUser;
+
+    @OneToMany(mappedBy = "user")
+    private List<DetailUser> detailUserList = new ArrayList<>();
+
+//    @ManyToMany(mappedBy = "userList")
+//    private List<DetailUser> list;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserDetailUser> userDetailUsers = new ArrayList<>();
 }
