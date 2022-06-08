@@ -1,6 +1,6 @@
 package com.sinaukoding.sinaukoding.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,8 +10,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "detail_user")
-@Getter
 @Setter
+@Getter
 public class DetailUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,19 +20,4 @@ public class DetailUser {
     @Column(name = "alamat")
     private String address;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_user")
-    private User user;
-
-//    @ManyToMany
-//    @JoinTable(
-//            name = "user_detail_user",
-//            joinColumns = @JoinColumn(name = "id_user"),
-//            inverseJoinColumns = @JoinColumn(name = "id_detail_user")
-//    )
-//    private List<User> userList;
-
-    @OneToMany(mappedBy = "detailUser")
-    private List<UserDetailUser> userDetailUsers = new ArrayList<>();
 }

@@ -1,7 +1,8 @@
 package com.sinaukoding.sinaukoding.service;
 
-import com.sinaukoding.sinaukoding.entity.DetailUser;
 import com.sinaukoding.sinaukoding.entity.User;
+import com.sinaukoding.sinaukoding.entity.dto.UserDTO;
+import com.sinaukoding.sinaukoding.entity.mapping.UserMapping;
 import com.sinaukoding.sinaukoding.repository.DetailUserRepository;
 import com.sinaukoding.sinaukoding.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,54 +19,47 @@ public class UserService {
     @Autowired
     DetailUserRepository detailUserRepository;
 
-    public User save(User param) {
-        User user = repository.save(param);
+    public UserDTO save(UserDTO param){
+        User user = repository.save(UserMapping.INSTANCE.toEntity(param));
+        return UserMapping.INSTANCE.toDto(user);
+    }
 
-        if (!param.getDetailUserList().isEmpty()) {
-            for (DetailUser detailUser : param.getDetailUserList()) {
-                if (detailUser.getId() != null) {
-                    detailUser = detailUserRepository.getReferenceById(detailUser.getId());
-                    detailUser.setUser(param);
-                } else {
-                    detailUser.setUser(user);
-                }
+    public List<UserDTO> lihatSemuaData(){
+        return UserMapping.INSTANCE.toUserDTOList(repository.findAll());
+    }
 
-                detailUserRepository.save(detailUser);
-            }
+    public List<UserDTO> findByProfileName(String param){
+        return UserMapping.INSTANCE.toUserDTOList(repository.findByProfileNameContaining(param));
+    }
+
+    public UserDTO findById(Integer id){
+        return UserMapping.INSTANCE.toDto(repository.findById(id).orElse(null));
+    }
+
+    public UserDTO updateData(UserDTO dto, Integer id){
+        User referenceData = repository.findById(id).get();
+        referenceData.setUsername(dto.getUsername() != null ? dto.getUsername() : referenceData.getUsername());
+        referenceData.setProfileName(dto.getProfileName() != null ? dto.getProfileName() : referenceData.getProfileName());
+
+        return UserMapping.INSTANCE.toDto(repository.save(referenceData));
+    }
+
+    public boolean deleteData(int id){
+        User reference = repository.findById(id).orElse(null);
+
+        if (reference != null) {
+            repository.delete(reference);
+            return true;
         }
 
-        return user;
-    }
-
-    public List<User> lihatSemuaData() {
-        return repository.findAll();
-    }
-
-    public List<User> findByProfileName(String param) {
-        return repository.findByProfileNameContaining(param);
-    }
-
-    public User findById(Integer id) {
-        return repository.findById(id).get();
-    }
-
-    public User updateData(User user, Integer id) {
-        User referenceData = repository.findById(id).get();
-        referenceData.setUsername(user.getUsername() != null ? user.getUsername() : referenceData.getUsername());
-        referenceData.setProfileName(user.getProfileName() != null ? user.getProfileName() : referenceData.getProfileName());
-
-        return repository.save(referenceData);
-    }
-
-    public boolean deleteData(int id) {
-        User reference = repository.findById(id).orElse(new User());
-        repository.delete(reference);
-
-        reference = repository.findById(id).orElse(null);
-
-        if (reference == null)
-            return true;
-
         return false;
+    }
+
+    public Integer countData(String nama){
+        if (nama != null){
+            return repository.countByProfileNameContaining(nama);
+        }
+
+        return (int) repository.count();
     }
 }

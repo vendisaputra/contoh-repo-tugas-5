@@ -1,6 +1,7 @@
 package com.sinaukoding.sinaukoding.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @Setter
 @Getter
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
@@ -34,12 +36,4 @@ public class User {
     @JoinColumn(name = "id_detail")
     private DetailUser detailUser;
 
-    @OneToMany(mappedBy = "user")
-    private List<DetailUser> detailUserList = new ArrayList<>();
-
-//    @ManyToMany(mappedBy = "userList")
-//    private List<DetailUser> list;
-
-    @OneToMany(mappedBy = "user")
-    private List<UserDetailUser> userDetailUsers = new ArrayList<>();
 }

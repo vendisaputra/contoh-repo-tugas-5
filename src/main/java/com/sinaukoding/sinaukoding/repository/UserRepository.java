@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findByProfileNameContaining(String profileName);
+
+    Integer countByProfileNameContaining(String name);
 }

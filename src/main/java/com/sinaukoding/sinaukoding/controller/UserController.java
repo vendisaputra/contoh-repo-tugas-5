@@ -1,11 +1,10 @@
 package com.sinaukoding.sinaukoding.controller;
 
-import com.sinaukoding.sinaukoding.Response;
-import com.sinaukoding.sinaukoding.entity.User;
+import com.sinaukoding.sinaukoding.common.Response;
+import com.sinaukoding.sinaukoding.entity.dto.UserDTO;
 import com.sinaukoding.sinaukoding.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,43 +16,41 @@ public class UserController {
     @Autowired
     UserService service;
 
-    @PostMapping()
-    public User saveUser(@RequestBody User param) {
-        return service.save(param);
+    @PostMapping
+    public Response saveUser(@RequestBody UserDTO param){
+        return new Response(service.save(param), "Data berhasil disimpan", HttpStatus.OK);
     }
 
-    @GetMapping()
-    public Response findAll() {
-        return new Response(service.lihatSemuaData(), "Data Berhasil ditampilkan", HttpStatus.OK);
+    @GetMapping
+    public Response findAll(){
+        return new Response(service.lihatSemuaData(), "Data berhasil ditampilkan", service.countData(null), HttpStatus.OK);
     }
 
     @GetMapping(value = "/find-by-profile-name")
-    public List<User> findByProfileName(@RequestParam(value = "profile-name") String profileName,
-                                        @RequestParam(value = "username", required = false) String username) {
-        return service.findByProfileName(profileName);
+    public Response findByProfileName(@RequestParam(value = "profile-name") String profileName){
+        List<UserDTO> data = service.findByProfileName(profileName);
+        return new Response(data, data.isEmpty() ? "Data tidak ditemukan" : "Data ditemukan", service.countData(profileName), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")
-    public User findById(@PathVariable int id) {
-        return service.findById(id);
+    public Response findById(@PathVariable int id){
+        UserDTO data = service.findById(id);
+        return new Response(data, data != null ? "Data dengan id tersebut tidak ditemukan" : "Data ditemukan", HttpStatus.OK);
     }
 
     @PutMapping(value = "/{id}")
-    public User updateData(@RequestBody User param, @PathVariable int id) {
-        return service.updateData(param, id);
+    public Response updateData(@RequestBody UserDTO param, @PathVariable int id){
+        return new Response(service.updateData(param, id), "Data berhasil disimpan", HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")
-    public String deleteData(@PathVariable int id) {
+    public Response deleteData(@PathVariable int id) {
         if (service.deleteData(id)) {
-            return "Data berhasil dihapus";
+            return new Response("Data berhasil dihapus", HttpStatus.OK);
         } else {
-            return "Data gagal dihapus";
+            return new Response("Data gagal dihapus", HttpStatus.OK);
         }
     }
-
-
-
 
 
 }
