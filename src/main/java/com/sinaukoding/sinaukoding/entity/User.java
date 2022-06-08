@@ -8,7 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -35,5 +34,4 @@ public class User {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_detail")
     private DetailUser detailUser;
-
 }
