@@ -7,8 +7,6 @@ import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Getter
 @Setter
