@@ -1,6 +1,7 @@
 package com.sinaukoding.sinaukoding.entity.mapping;
 
 import com.sinaukoding.sinaukoding.entity.User;
+import com.sinaukoding.sinaukoding.entity.dto.UserCustomeDTO;
 import com.sinaukoding.sinaukoding.entity.dto.UserDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -18,4 +19,6 @@ public interface UserMapping {
     List<User> toUserList(List<UserDTO> data);
 
     List<UserDTO> toUserDTOList(List<User> data);
+
+    List<UserCustomeDTO> toCustomeDTO(List<User> data);
 }

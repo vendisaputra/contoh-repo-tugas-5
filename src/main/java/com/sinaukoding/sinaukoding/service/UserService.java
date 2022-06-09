@@ -1,6 +1,7 @@
 package com.sinaukoding.sinaukoding.service;
 
 import com.sinaukoding.sinaukoding.entity.User;
+import com.sinaukoding.sinaukoding.entity.dto.UserCustomeDTO;
 import com.sinaukoding.sinaukoding.entity.dto.UserDTO;
 import com.sinaukoding.sinaukoding.entity.mapping.UserMapping;
 import com.sinaukoding.sinaukoding.repository.DetailUserRepository;
@@ -24,8 +25,8 @@ public class UserService {
         return UserMapping.INSTANCE.toDto(user);
     }
 
-    public List<UserDTO> lihatSemuaData(){
-        return UserMapping.INSTANCE.toUserDTOList(repository.findAll());
+    public List<UserCustomeDTO> lihatSemuaData(){
+        return UserMapping.INSTANCE.toCustomeDTO(repository.findAll());
     }
 
     public List<UserDTO> findByProfileName(String param){
