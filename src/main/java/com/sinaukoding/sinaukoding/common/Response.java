@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -20,23 +22,23 @@ public class Response implements Serializable {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     Integer row;
 
-    HttpStatus httpStatus;
+    HttpStatus status;
 
     public Response(String message, HttpStatus httpStatus) {
         this.message = message;
-        this.httpStatus = httpStatus;
+        this.status = httpStatus;
     }
 
     public Response(Object object, String message, HttpStatus httpStatus){
         this.data = object;
         this.message = message;
-        this.httpStatus = httpStatus;
+        this.status = httpStatus;
     }
 
     public Response(Object data, String message, Integer row, HttpStatus httpStatus) {
         this.data = data;
         this.message = message;
         this.row = row;
-        this.httpStatus = httpStatus;
+        this.status = httpStatus;
     }
 }

@@ -40,6 +40,7 @@ public class UserService {
         User referenceData = repository.findById(id).get();
         referenceData.setUsername(dto.getUsername() != null ? dto.getUsername() : referenceData.getUsername());
         referenceData.setProfileName(dto.getProfileName() != null ? dto.getProfileName() : referenceData.getProfileName());
+        referenceData.setDate(dto.getDate() != null ? dto.getDate() : referenceData.getDate());
 
         return UserMapping.INSTANCE.toDto(repository.save(referenceData));
     }

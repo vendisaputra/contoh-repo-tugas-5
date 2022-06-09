@@ -29,7 +29,7 @@ public class User {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date date;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_detail")
     private DetailUser detailUser;
 }

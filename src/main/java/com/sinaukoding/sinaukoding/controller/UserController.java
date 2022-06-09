@@ -35,7 +35,7 @@ public class UserController {
     @GetMapping(value = "/{id}")
     public Response findById(@PathVariable int id){
         UserDTO data = service.findById(id);
-        return new Response(data, data != null ? "Data dengan id tersebut tidak ditemukan" : "Data ditemukan", HttpStatus.OK);
+        return new Response(data, data != null ? "Data ditemukan" : "Data dengan id tersebut tidak ditemukan", HttpStatus.OK);
     }
 
     @PutMapping(value = "/{id}")
