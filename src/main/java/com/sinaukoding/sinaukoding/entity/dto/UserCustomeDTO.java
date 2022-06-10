@@ -1,7 +1,6 @@
 package com.sinaukoding.sinaukoding.entity.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.sinaukoding.sinaukoding.entity.DetailUser;
 import lombok.Getter;
 import lombok.Setter;
 

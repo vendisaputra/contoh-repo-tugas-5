@@ -18,5 +18,5 @@ public class UserDTO {
     private String profileName;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date date;
-    private DetailUser detailUser;
+    private UserDetailDTO detailUser;
 }
