@@ -40,7 +40,8 @@ public class UserController {
 
     @PutMapping(value = "/{id}")
     public Response updateData(@RequestBody UserDTO param, @PathVariable int id){
-        return new Response(service.updateData(param, id), "Data berhasil disimpan", HttpStatus.OK);
+        UserDTO data = service.updateData(param, id);
+        return new Response(data, data != null ? "Data berhasil disimpan" : "Data dengan id tersebut tidak ditemukan", HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")

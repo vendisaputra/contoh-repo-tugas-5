@@ -38,12 +38,18 @@ public class UserService {
     }
 
     public UserDTO updateData(UserDTO dto, Integer id){
-        User referenceData = repository.findById(id).get();
-        referenceData.setUsername(dto.getUsername() != null ? dto.getUsername() : referenceData.getUsername());
-        referenceData.setProfileName(dto.getProfileName() != null ? dto.getProfileName() : referenceData.getProfileName());
-        referenceData.setDate(dto.getDate() != null ? dto.getDate() : referenceData.getDate());
+        User referenceData = repository.findById(id).orElse(null);
 
-        return UserMapping.INSTANCE.toDto(repository.save(referenceData));
+        if (referenceData != null) {
+            referenceData.setUsername(dto.getUsername() != null ? dto.getUsername() : referenceData.getUsername());
+            referenceData.setProfileName(dto.getProfileName() != null ? dto.getProfileName() : referenceData.getProfileName());
+            referenceData.setDate(dto.getDate() != null ? dto.getDate() : referenceData.getDate());
+
+            return UserMapping.INSTANCE.toDto(repository.save(referenceData));
+        }
+
+        return null;
+
     }
 
     public boolean deleteData(int id){

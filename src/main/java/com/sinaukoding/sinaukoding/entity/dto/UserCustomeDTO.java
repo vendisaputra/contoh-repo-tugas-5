@@ -10,8 +10,6 @@ import java.util.Date;
 @Getter
 public class UserCustomeDTO {
     private Integer idUser;
-    private String username;
-    private String profileName;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date date;
     private DetailUserCustomeDTO detailUser;
